@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('ingredient_recipe', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignIdFor(\App\Models\Recipe::class);
+            $table->foreignIdFor(\App\Models\Ingredient::class);
+            $table->integer('quantity');
+            $table->foreignIdFor(\App\Models\MeasurementUnit::class);
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('ingredient_recipe');
     }
 };

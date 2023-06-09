@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RecipeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,7 +38,6 @@ Route::middleware([
     'auth.mod',
     config('jetstream.auth_session'),
 ])->group(function () {
-   Route::get('/recipe/create', function () {
-       return Inertia::render('Recipe/Create');
-   })->name('recipe.create');
+    Route::get('/recipe/create', [RecipeController::class, 'create'])->name('recipe.create');
+    Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
 });

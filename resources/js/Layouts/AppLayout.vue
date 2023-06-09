@@ -6,7 +6,6 @@ import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLinks from "../Components/NavLinks.vue";
-import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import ResponsiveNavLinks from "../Components/ResponsiveNavLinks.vue";
 
