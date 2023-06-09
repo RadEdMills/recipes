@@ -38,6 +38,7 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $recipe = Recipe::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -50,10 +51,9 @@ class RecipeController extends Controller
                 if($tag['id']) {
                     $recipe->tags()->attach(Tag::find($tag['id']));
                 } else {
-//                    $new_tag = Tag::create([
-//                        'name'
-//                    ]);
-//                    $recipe->tags->attach($new_tag);
+                    $recipe->tags->save([
+                        'name' => $tag
+                    ]);
                 }
             }
         }
@@ -64,10 +64,9 @@ class RecipeController extends Controller
                 if($origin['id']) {
                     $recipe->origins()->attach(Tag::find($origin['id']));
                 } else {
-//                    $new_tag = Tag::create([
-//                        'name'
-//                    ]);
-//                    $recipe->tags->attach($new_tag);
+                    $recipe->tags->save([
+                        'name' => $origin
+                    ]);
                 }
             }
         }
@@ -84,10 +83,12 @@ class RecipeController extends Controller
                         ]
                     );
                 } else {
-//                    $new_tag = Tag::create([
-//                        'name'
-//                    ]);
-//                    $recipe->tags->attach($new_tag);
+                    $new_tag = Tag::create([
+                        'name'
+                    ]);
+                    $recipe->tags->save([
+                        'name' => $ingredient
+                    ]);
                 }
             }
         }

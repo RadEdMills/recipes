@@ -62,7 +62,7 @@
                             :items="ingredients"
                             item-id="id"
                             item-title="name"
-                            @change="selectIngredient"
+                            @change="selectIngredient($event)"
                             chips
                             multiple
                             variant="solo"
@@ -70,29 +70,54 @@
                     </div>
 
                     <div>
-                        <div class="pb-3 flex" v-for="(ingredient, index) in form.ingredients">
-                            <v-text-field
-                                class="!flex-none w-32 px-3"
-                                label="Quantity"
-                                v-model="form.ingredients[index].quantity"
-                                variant="solo"
-                                type="number"
-                                required
-                            ></v-text-field>
-                            <v-select
-                                class="!flex-none w-40 px-3"
-                                label="Unit"
-                                v-model="form.ingredients[index].unit"
-                                :items="measurement_units"
-                                item-id="id"
-                                item-title="name"
-                                item-value="id"
-                                variant="solo"
-                                required
-                            ></v-select>
-                            <div class="flex-none px-3 py-5">
-                                {{ ingredient.name }}
+                        <div class="pb-3" v-for="(ingredient, index) in form.ingredients">
+                            <div class="flex" v-if="typeof ingredient === 'string'">
+                                <v-text-field
+                                    class="!flex-none w-32 px-3"
+                                    v-model="form.ingredients[form.ingredients.length - 1].quantity"
+                                    label="Quantity"
+                                    variant="solo"
+                                    type="number"
+                                ></v-text-field>
+                                <v-select
+                                    class="!flex-none w-40 px-3"
+                                    v-model="form.ingredients[form.ingredients.length - 1].unit"
+                                    label="Unit"
+                                    :items="measurement_units"
+                                    item-id="id"
+                                    item-title="name"
+                                    item-value="id"
+                                    variant="solo"
+                                ></v-select>
+                                <div class="flex-none px-3 py-5">
+                                    {{ ingredient }}
+                                </div>
                             </div>
+                            <div class="flex" v-else>
+                                <v-text-field
+                                    class="!flex-none w-32 px-3"
+                                    label="Quantity"
+                                    v-model="form.ingredients[index].quantity"
+                                    variant="solo"
+                                    type="number"
+                                    required
+                                ></v-text-field>
+                                <v-select
+                                    class="!flex-none w-40 px-3"
+                                    label="Unit"
+                                    v-model="form.ingredients[index].unit"
+                                    :items="measurement_units"
+                                    item-id="id"
+                                    item-title="name"
+                                    item-value="id"
+                                    variant="solo"
+                                    required
+                                ></v-select>
+                                <div class="flex-none px-3 py-5">
+                                    {{ ingredient.name }}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -123,6 +148,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Editor from '@tinymce/tinymce-vue';
 import { useForm } from "@inertiajs/vue3";
+import {watch} from "vue";
 
 const form = useForm({
     title: null,
@@ -139,6 +165,7 @@ const props = defineProps({
     ingredients: Object,
     measurement_units: Object
 })
+
 </script>
 
 <style scoped>
