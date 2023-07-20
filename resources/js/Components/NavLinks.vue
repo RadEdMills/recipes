@@ -13,6 +13,9 @@ import NavLink from '@/Components/NavLink.vue';
     <NavLink v-if="$page.props.auth.user && $page.props.auth.user.current_team_id === 1" :href="route('recipe.create')" :active="route().current('recipe.create')">
         Create Recipe
     </NavLink>
+    <NavLink v-if="$page.props.auth.user && $page.props.auth.user.current_team_id === 1" :href="route('ingredient.create')" :active="route().current('ingredient.create')">
+        Create Ingredient
+    </NavLink>
 
 </template>
 

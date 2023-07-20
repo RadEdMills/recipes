@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,4 +41,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/recipe/create', [RecipeController::class, 'create'])->name('recipe.create');
     Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
+
+    Route::get('/ingredient/create', [IngredientController::class, 'create'])->name('ingredient.create');
+    Route::post('/ingredient/store', [IngredientController::class, 'store'])->name('ingredient.store');
 });
