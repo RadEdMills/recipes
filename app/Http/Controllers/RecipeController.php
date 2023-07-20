@@ -38,7 +38,7 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+//        dd($request);
         $recipe = Recipe::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -48,10 +48,10 @@ class RecipeController extends Controller
         $tags = $request->tags;
         if($tags) {
             foreach($tags as $tag) {
-                if($tag['id']) {
+                if(!is_string($tag)) {
                     $recipe->tags()->attach(Tag::find($tag['id']));
                 } else {
-                    $recipe->tags->save([
+                    $recipe->tags()->create([
                         'name' => $tag
                     ]);
                 }
@@ -61,10 +61,10 @@ class RecipeController extends Controller
         $origins = $request->origins;
         if($origins) {
             foreach($origins as $origin) {
-                if($origin['id']) {
+                if(!is_string($origin)) {
                     $recipe->origins()->attach(Tag::find($origin['id']));
                 } else {
-                    $recipe->tags->save([
+                    $recipe->origins()->create([
                         'name' => $origin
                     ]);
                 }
@@ -74,7 +74,7 @@ class RecipeController extends Controller
         $ingredients = $request->ingredients;
         if($ingredients) {
             foreach($ingredients as $ingredient) {
-                if($ingredient['id']) {
+                if(!is_string($ingredient)) {
                     $recipe->ingredients()->attach(
                         Tag::find($ingredient['id']),
                         [
@@ -83,10 +83,7 @@ class RecipeController extends Controller
                         ]
                     );
                 } else {
-                    $new_tag = Tag::create([
-                        'name'
-                    ]);
-                    $recipe->tags->save([
+                    $recipe->ingredients()->create([
                         'name' => $ingredient
                     ]);
                 }
