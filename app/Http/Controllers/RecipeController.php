@@ -8,6 +8,7 @@ use App\Models\Origin;
 use App\Models\Recipe;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use function PHPUnit\Framework\isEmpty;
 
 class RecipeController extends Controller
@@ -17,7 +18,16 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        $recipes = Recipe::with('tags', 'origins')->get();
+        $can_login = Route::has('login');
+        $can_register = Route::has('register');
+
+        return inertia('Recipe/Index', [
+            'recipes' => $recipes,
+            'canLogin' =>$can_login,
+            'canRegister' => $can_register
+
+        ]);
     }
 
     /**

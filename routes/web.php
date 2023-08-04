@@ -26,6 +26,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/recipe/', [RecipeController::class, 'index'])->name('recipe.index');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
