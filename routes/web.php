@@ -26,6 +26,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -34,6 +35,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+
+Route::get('/recipe/', [RecipeController::class, 'index'])->name('recipe.index');
+Route::get('/recipe/{id}', [RecipeController::class, 'show'])->name('recipe.show');
 
 Route::middleware([
     'auth.mod',

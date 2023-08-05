@@ -11,6 +11,8 @@ import ResponsiveNavLinks from "../Components/ResponsiveNavLinks.vue";
 
 defineProps({
     title: String,
+    canLogin: Boolean,
+    canRegister: Boolean,
 });
 
 const showingNavigationDropdown = ref(false);
@@ -54,7 +56,7 @@ const logout = () => {
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <div class="ml-3 relative">
+                            <div class="ml-3 relative" v-if="$page.props.auth.user">
                                 <!-- Teams Dropdown -->
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
@@ -113,9 +115,10 @@ const logout = () => {
                                     </template>
                                 </Dropdown>
                             </div>
-
                             <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
+                            <!--                            TODO: v-else voor niet ingelogd  -->
+
+                            <div class="ml-3 relative" v-if="$page.props.auth.user">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
@@ -158,7 +161,20 @@ const logout = () => {
                                     </template>
                                 </Dropdown>
                             </div>
+
+                            <div class="ml-3 relative" >
+                                <div v-if="canLogin"  class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                                    <template class="inline-flex rounded-md">
+                                        <Link :href="route('login')" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</Link>
+
+                                        <Link v-if="canRegister" :href="route('register')" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</Link>
+                                    </template>
+                                </div>
+
+                            </div>
                         </div>
+
+
 
                         <!-- Hamburger -->
                         <div class="-mr-2 flex items-center sm:hidden">
@@ -196,7 +212,7 @@ const logout = () => {
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600" v-if="$page.props.auth.user">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
                                 <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">

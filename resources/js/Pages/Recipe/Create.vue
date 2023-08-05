@@ -1,3 +1,27 @@
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import Editor from '@tinymce/tinymce-vue';
+import { useForm } from "@inertiajs/vue3";
+import {watch} from "vue";
+
+const form = useForm({
+    title: null,
+    tags: null,
+    origins: null,
+    instructions: null,
+    ingredients: null,
+    description: null,
+})
+
+const props = defineProps({
+    tags: Object,
+    origins: Object,
+    ingredients: Object,
+    measurement_units: Object
+})
+
+</script>
 <template>
     <AppLayout title="Create Recipe">
         <template #header>
@@ -62,7 +86,7 @@
                             :items="ingredients"
                             item-id="id"
                             item-title="name"
-                            @change="selectIngredient($event)"
+                            @update:modelValue="selectIngredient($event)"
                             chips
                             multiple
                             variant="solo"
@@ -142,32 +166,6 @@
 
     </AppLayout>
 </template>
-
-<script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import Editor from '@tinymce/tinymce-vue';
-import { useForm } from "@inertiajs/vue3";
-import {watch} from "vue";
-
-const form = useForm({
-    title: null,
-    tags: null,
-    origins: null,
-    instructions: null,
-    ingredients: null,
-    description: null,
-})
-
-const props = defineProps({
-    tags: Object,
-    origins: Object,
-    ingredients: Object,
-    measurement_units: Object
-})
-
-</script>
-
 <style scoped>
 
 </style>
