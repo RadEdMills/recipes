@@ -26,7 +26,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/recipe/', [RecipeController::class, 'index'])->name('recipe.index');
 
 Route::middleware([
     'auth:sanctum',
@@ -36,6 +35,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+
+Route::get('/recipe/', [RecipeController::class, 'index'])->name('recipe.index');
+Route::get('/recipe/{id}', [RecipeController::class, 'show'])->name('recipe.show');
 
 Route::middleware([
     'auth.mod',

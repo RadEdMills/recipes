@@ -48,7 +48,6 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
         $recipe = Recipe::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -106,7 +105,15 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $recipe = Recipe::with('tags', 'origins')->find($id);
+        $can_login = Route::has('login');
+        $can_register = Route::has('register');
+
+        return inertia('Recipe/Show', [
+            'recipe' => $recipe,
+            'canLogin' =>$can_login,
+            'canRegister' => $can_register
+        ]);
     }
 
     /**
